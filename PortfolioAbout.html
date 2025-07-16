@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sobre Mí - Maximiliano Lee</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Spectral:wght@400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Josefin Sans', sans-serif;
+      min-height: 100vh;
+      background-color: #f0f8ff;
+    }
+
+    nav {
+      background-color: #f0f8ff;
+      border-bottom: 2px solid black;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      flex-wrap: wrap;
+    }
+
+    nav div {
+      font-weight: bolder;
+      font-size: 25px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav li {
+      border: 1px solid black;
+      background-color: white;
+    }
+
+    nav a.active {
+      background-color: #eef36d;
+    }
+
+    nav a {
+      display: block;
+      padding: 8px 16px;
+      color: black;
+      text-decoration: none;
+    }
+
+    .container {
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 50px;
+      font-weight: bold;
+      color: cornflowerblue;
+      margin: 20px 0;
+    }
+
+    .about-section {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 40px 0;
+      flex-wrap: wrap;
+    }
+
+    .about-section img {
+      width: 400px;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    .about-text {
+      max-width: 500px;
+      text-align: left;
+    }
+
+    .about-text h2 {
+      font-size: 24px;
+      color: saddlebrown;
+      margin: 20px 0;
+    }
+
+    .about-text p {
+      font-size: 16px;
+      margin: 20px 0;
+      line-height: 1.5;
+    }
+
+    .interests {
+      background-color: #f0f8ff;
+      padding: 30px;
+      border: 1px solid black;
+      margin: 40px auto;
+      max-width: 800px;
+    }
+
+    .interests h3 {
+      font-size: 24px;
+      color: saddlebrown;
+      margin-bottom: 20px;
+    }
+
+    .interests-grid {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .interest-item {
+      text-align: center;
+      width: 120px;
+    }
+
+    .interest-item div {
+      font-size: 40px;
+      margin: 10px 0;
+    }
+
+    .interest-item h4 {
+      font-size: 16px;
+      margin: 10px 0;
+    }
+
+    .interest-item p {
+      font-size: 12px;
+    }
+
+    .filosofia {
+      margin: 40px 0;
+    }
+
+    .filosofia h3 {
+      font-size: 24px;
+      color: saddlebrown;
+      margin: 20px 0;
+    }
+
+    .filosofia div {
+      background-color: white;
+      padding: 30px;
+      border: 1px solid black;
+      font-style: italic;
+      font-size: 18px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    footer p {
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    /* MEDIA QUERIES */
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .about-text {
+        text-align: center;
+      }
+
+      .about-text h2, .about-text p {
+        text-align: center;
+      }
+
+      .filosofia div {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 36px;
+      }
+
+      .about-text h2 {
+        font-size: 20px;
+      }
+
+      .about-text p {
+        font-size: 14px;
+      }
+
+      .interest-item {
+        width: 100%;
+      }
+
+      .interests h3,
+      .filosofia h3 {
+        font-size: 20px;
+      }
+
+      .filosofia div {
+        font-size: 14px;
+        padding: 20px;
+      }
+
+      nav div {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div>ML</div>
+    <ul>
+      <li><a href="PortfolioMain.html">Home</a></li>
+      <li><a href="PortfolioAbout.html" class="active">Sobre Mí</a></li>
+      <li><a href="PortfolioProjects.html">Proyectos</a></li>
+      <li><a href="PortfolioSkills.html">Habilidades</a></li>
+      <li><a href="PortfolioContact.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- Contenido Principal -->
+  <div class="container">
+    <h1>Sobre Mí</h1>
+
+    <div class="about-section">
+      <div>
+        <img src="Imagenes/Maxi.jpg" alt="Maximiliano Lee" />
+      </div>
+      <div class="about-text">
+        <h2>¡Hola! Soy Maxi</h2>
+        <p>Soy estudiante de la Licenciatura en Negocios Digitales en UADE, apasionado por la intersección entre tecnología y negocios...</p>
+        <p>Además de mis estudios, tengo un gran interés por la moda y la música...</p>
+        <p>Hablo español e inglés con fluidez, tengo conocimientos intermedios de coreano y una comprensión básica de francés, lo que me permite conectarme con diversas culturas.</p>
+      </div>
+    </div>
+
+    <div class="interests">
+      <h3>Mis Intereses</h3>
+      <div class="interests-grid">
+        <div class="interest-item">
+          <div>💻</div>
+          <h4>Tecnología</h4>
+          <p>Desarrollo web, apps móviles, hardware</p>
+        </div>
+        <div class="interest-item">
+          <div>💼</div>
+          <h4>Negocios</h4>
+          <p>Emprendimiento, marketing</p>
+        </div>
+        <div class="interest-item">
+          <div>👔</div>
+          <h4>Moda</h4>
+          <p>Tendencias, diseño</p>
+        </div>
+        <div class="interest-item">
+          <div>🎵</div>
+          <h4>Música</h4>
+          <p>Producción, canto y géneros diversos</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="filosofia">
+      <h3>Mi Filosofía</h3>
+      <div>
+        "Un paso a la vez. Cada día es una oportunidad para aprender algo nuevo..."
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div>
+      <a href="https://github.com/maxilee16" target="_blank" rel="noreferrer">GitHub</a>
+      <a href="https://www.linkedin.com/in/maximiliano-lee-b12687174/" target="_blank" rel="noreferrer">LinkedIn</a>
+      <a href="https://www.instagram.com/maxilee_/?hl=es-la" target="_blank" rel="noreferrer">Instagram</a>
+    </div>
+    <p>© 2025 Maximiliano Lee - Trabajo Práctico Nro. 3 - Diseño y Desarrollo Web</p>
+  </footer>
+
+</body>
+</html>

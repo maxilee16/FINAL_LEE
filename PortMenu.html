@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Menú del Restaurante - Maximiliano Lee</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Spectral:wght@400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Josefin Sans', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #fff7ed, #ffffff); 
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Contenedor que abarca toda la pantalla de "Cargando..." */
+    .loading-container {
+        min-height: 100vh;
+        background: linear-gradient(to bottom, #fff7ed, #ffffff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        position: fixed; 
+        top: 0;
+        left: 0;
+        z-index: 100;
+    }
+
+    .loading-spinner {
+      animation: spin 1s linear infinite; 
+      border-radius: 9999px; 
+      height: 64px; 
+      width: 64px; 
+      border-bottom: 2px solid #f97316;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 16px;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 20px; 
+      color: #4a5568; 
+    }
+
+    /* --- Nav --- */
+    nav {
+      background-color: #f0f8ff;
+      border-bottom: 2px solid black;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      flex-wrap: wrap;
+    }
+
+    nav div {
+      font-weight: bolder;
+      font-size: 25px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav li {
+      border: 1px solid black;
+      background-color: white;
+    }
+
+    nav a.active {
+      background-color: #eef36d;
+    }
+
+    nav a {
+      display: block;
+      padding: 8px 16px;
+      color: black;
+      text-decoration: none;
+    }
+
+    /* Contenedor Principal */
+    .container {
+      padding: 32px 16px; 
+      max-width: 1200px; 
+      margin-left: auto;
+      margin-right: auto;
+      flex-grow: 1;
+    }
+
+    /* Header de Página */
+    .menu-header {
+      text-align: center;
+      margin-bottom: 32px; 
+    }
+
+    .menu-header h1 {
+      font-family: 'Josefin Sans', sans-serif; 
+      font-size: 50px; 
+      font-weight: bold; 
+      color: #ea580c; 
+      margin-bottom: 16px;
+    }
+
+    .menu-header p {
+      font-family: 'Spectral', serif; 
+      font-size: 18px; 
+      color: #4a5568; 
+      margin-bottom: 24px; 
+    }
+
+    .back-link {
+      color: #2c5282; 
+      text-decoration: none; 
+      font-family: 'Josefin Sans', sans-serif; 
+    }
+
+    .back-link:hover {
+        color: #2a4365; 
+        text-decoration: underline;
+    }
+
+    /* Barra de Búsqueda */
+    .search-bar-wrapper {
+      max-width: 448px; 
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 32px; 
+    }
+
+    .search-input {
+      width: 100%; 
+      padding: 12px 16px; 
+      border: 1px solid #d1d5db; 
+      border-radius: 8px; 
+      outline: none; 
+      font-family: 'Spectral', serif; 
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: #f97316; 
+      box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.5);
+    }
+
+    /* Filtros por Categoría */
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap; 
+      justify-content: center; 
+      gap: 8px; 
+      margin-bottom: 32px; 
+    }
+
+    .category-button {
+      padding: 8px 16px; 
+      border-radius: 9999px; 
+      font-family: 'Josefin Sans', sans-serif; 
+      transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out; /* transition-colors */
+      border: none;
+      cursor: pointer;
+      background-color: white; 
+      color: #4a5568; 
+    }
+
+    .category-button:hover {
+      background-color: #ffedd5; 
+    }
+
+    .category-button.active {
+      background-color: #f97316; 
+      color: white; 
+    }
+
+    /* Grilla de elementos del Menú */
+    .menu-grid-wrapper {
+      max-width: 1024px; 
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr); 
+      gap: 24px; 
+    }
+
+    .menu-item-card {
+      background-color: white;
+      border-radius: 8px; 
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      transition: box-shadow 0.2s ease-in-out; 
+    }
+
+    .menu-item-card:hover {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .menu-item-image-container {
+      position: relative;
+    }
+
+    .menu-item-image {
+      width: 100%; 
+      height: 192px;
+      object-fit: cover; 
+    }
+
+    .popular-tag {
+      position: absolute;
+      top: 8px; 
+      right: 8px; 
+      background-color: #ef4444; 
+      color: white;
+      padding: 4px 8px; 
+      border-radius: 9999px;
+      font-size: 12px; 
+      font-weight: bold; 
+    }
+
+    .menu-item-details {
+      padding: 24px;
+    }
+
+    .menu-item-name {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 20px; 
+      font-weight: bold; 
+      color: #1a202c; 
+      margin-bottom: 8px;
+    }
+
+    .menu-item-description {
+      font-family: 'Spectral', serif;
+      color: #4a5568; 
+      margin-bottom: 16px; 
+      font-size: 14px; 
+    }
+
+    .menu-item-footer {
+      display: flex;
+      justify-content: space-between; 
+      align-items: center; 
+    }
+
+    .menu-item-price {
+      font-family: 'Josefin Sans', sans-serif; 
+      font-size: 24px;
+      font-weight: bold;
+      color: #ea580c; 
+    }
+
+    .add-to-cart-button {
+      background-color: #f97316; 
+      color: white;
+      padding: 8px 16px; 
+      border-radius: 4px; 
+      transition: background-color 0.15s ease-in-out; 
+      font-family: 'Josefin Sans', sans-serif; 
+      border: none;
+      cursor: pointer;
+    }
+
+    .add-to-cart-button:hover {
+      background-color: #ea580c; 
+    }
+
+    /* Mensaje de "No hay coincidencias con la búsqueda" */
+    .no-items-message {
+      text-align: center; 
+      padding-top: 48px;
+      padding-bottom: 48px;
+    }
+
+    .no-items-message p {
+      font-family: 'Spectral', serif; 
+      font-size: 20px; 
+      color: #4a5568; 
+    }
+
+    /* Información de Sección */
+    .info-section {
+      margin-top: 48px; 
+      max-width: 896px; 
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .info-card {
+      background-color: white;
+      padding: 32px; 
+      border-radius: 8px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+    }
+
+    .info-card h3 {
+      font-family: 'Josefin Sans', sans-serif; 
+      font-size: 24px; 
+      color: #ea580c; 
+      margin-bottom: 24px; 
+      text-align: center;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 24px;
+    }
+
+    .info-grid h4 {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 600; 
+      color: #1a202c; 
+      margin-bottom: 12px;
+    }
+
+    .info-grid ul {
+      list-style: none; 
+      padding: 0;
+      margin: 0;
+      font-family: 'Spectral', serif; 
+      color: #4a5568; 
+      line-height: 1.5;
+    }
+
+    .tech-tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px; 
+    }
+
+    .tech-tag-item {
+      padding: 4px 12px; 
+      border-radius: 9999px; 
+      font-size: 14px; 
+    }
+
+    /* Etiquetas de Colores de Tecnologias usadas */
+    .tech-tag-yellow { background-color: #fcd34d; color: black; } 
+    .tech-tag-blue { background-color: #3b82f6; color: white; } 
+    .tech-tag-green { background-color: #22c55e; color: white; } 
+    .tech-tag-purple { background-color: #a855f7; color: white; } 
+
+
+    /* --- Footer --- */
+    footer {
+      background-color: #333; 
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    footer a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+      transition: color 0.3s ease-in-out;
+    }
+    
+    footer a:hover {
+        color: #90cdf4; 
+    }
+
+    footer p {
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    /* --- MEDIA QUERIES --- */
+    @media (min-width: 768px) { 
+      .menu-grid {
+        grid-template-columns: repeat(2, 1fr); 
+      }
+      .info-grid {
+        grid-template-columns: repeat(2, 1fr); 
+      }
+    }
+
+    @media (min-width: 1024px) { 
+      .menu-grid {
+        grid-template-columns: repeat(3, 1fr); 
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .menu-header h1 {
+        font-size: 40px;
+      }
+      .menu-header p {
+        font-size: 16px;
+      }
+      .category-button {
+        padding: 6px 12px;
+        font-size: 14px;
+      }
+      .menu-item-name {
+        font-size: 18px;
+      }
+      .menu-item-price {
+        font-size: 20px;
+      }
+      .info-card h3 {
+        font-size: 20px;
+      }
+      .info-grid h4 {
+        font-size: 16px;
+      }
+      .info-grid ul li, .tech-tag-item {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav div {
+        font-size: 20px;
+      }
+      .menu-header h1 {
+        font-size: 30px;
+      }
+      .menu-header p {
+        font-size: 14px;
+      }
+      .back-link {
+        font-size: 14px;
+      }
+      .search-input {
+        padding: 10px 12px;
+      }
+      .category-button {
+        padding: 5px 10px;
+        font-size: 12px;
+      }
+      .menu-item-card {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+      .menu-item-name {
+        font-size: 16px;
+      }
+      .menu-item-price {
+        font-size: 18px;
+      }
+      .add-to-cart-button {
+        padding: 6px 12px;
+        font-size: 14px;
+      }
+      .info-card h3 {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loading-screen" class="loading-container">
+    <div class="text-center">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Cargando menú...</p>
+    </div>
+  </div>
+
+  <div id="main-content" style="display: none;">
+    <nav>
+      <div>ML</div>
+      <ul>
+        <li><a href="PortfolioMain.html">Home</a></li>
+        <li><a href="PortfolioAbout.html">Sobre Mí</a></li>
+        <li><a href="PortfolioProjects.html" class="active">Proyectos</a></li>
+        <li><a href="PortfolioSkills.html">Habilidades</a></li>
+        <li><a href="PortfolioContact.html">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <div class="menu-header">
+        <h1>🍕 Menú del Restaurante</h1>
+        <p>
+          Menú dinámico cargado desde JSON con filtros por categoría y búsqueda
+        </p>
+        <a href="PortfolioProjects.html" class="back-link">
+          ← Volver a Proyectos
+        </a>
+      </div>
+
+      <div class="search-bar-wrapper">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Buscar platos..."
+          class="search-input"
+        />
+      </div>
+
+      <div id="category-filters" class="category-filters">
+        </div>
+
+      <div class="menu-grid-wrapper">
+        <div id="menu-items-container" class="menu-grid">
+          </div>
+        <div id="no-items-message" class="no-items-message" style="display: none;">
+          <p>No se encontraron platos que coincidan con tu búsqueda.</p>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <div class="info-card">
+          <h3>Características del Proyecto</h3>
+          <div class="info-grid">
+            <div>
+              <h4>Funcionalidades:</h4>
+              <ul>
+                <li>• Carga dinámica desde JSON</li>
+                <li>• Filtros por categoría</li>
+                <li>• Búsqueda en tiempo real</li>
+                <li>• Indicador de platos populares</li>
+                <li>• Diseño responsive</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Tecnologías:</h4>
+              <div class="tech-tags-container">
+                <span class="tech-tag-item tech-tag-yellow">JavaScript</span>
+                <span class="tech-tag-item tech-tag-blue">JSON</span>
+                <span class="tech-tag-item tech-tag-green">DOM Manipulation</span>
+                <span class="tech-tag-item tech-tag-purple">Event Listeners</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+      <div class="container mx-auto px-4 text-center">
+        <div class="flex justify-center gap-6 mb-4">
+          <a href="https://github.com/maxilee16" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://www.linkedin.com/in/maximiliano-lee-b12687174/" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a href="https://www.instagram.com/maxilee_/?hl=es-la" target="_blank" rel="noreferrer">Instagram</a>
+        </div>
+        <p>© 2025 Maximiliano Lee - Trabajo Práctico Nro. 3 - Diseño y Desarrollo Web</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+
+    let menuItems = [];
+    let filteredItems = [];
+    let selectedCategory = "all";
+    let searchTerm = "";
+
+    // DOM Elements
+    const loadingScreen = document.getElementById('loading-screen');
+    const mainContent = document.getElementById('main-content');
+    const searchInput = document.getElementById('search-input');
+    const categoryFiltersContainer = document.getElementById('category-filters');
+    const menuItemsContainer = document.getElementById('menu-items-container');
+    const noItemsMessage = document.getElementById('no-items-message');
+
+    // Configuración de Categorías del Menú
+    const categoriesConfig = [
+      { id: "all", name: "Todos", icon: "🍽️" },
+      { id: "pizzas", name: "Pizzas", icon: "🍕" },
+      { id: "hamburguesas", name: "Hamburguesas", icon: "🍔" },
+      { id: "pastas", name: "Pastas", icon: "🍝" },
+      { id: "ensaladas", name: "Ensaladas", icon: "🥗" },
+      { id: "postres", name: "Postres", icon: "🍰" },
+    ];
+
+    // --- Datos (simulamos un archivo JSON) ---
+    const mockMenuData = [
+      {
+        id: 1,
+        name: "Pizza Margherita",
+        description: "Salsa de tomate, mozzarella fresca, albahaca y aceite de oliva",
+        price: 15000,
+        category: "pizzas",
+        image: "Imagenes/marghe.webp?height=200&width=300",
+        popular: true,
+      },
+      {
+        id: 2,
+        name: "Hamburguesa Clásica",
+        description: "Carne de res, lechuga, tomate, cebolla, queso y papas fritas",
+        price: 17000,
+        category: "hamburguesas",
+        image: "Imagenes/burger.jpeg?height=200&width=300",
+      },
+      {
+        id: 3,
+        name: "Ensalada César",
+        description: "Lechuga romana, pollo grillado, crutones, parmesano y aderezo césar",
+        price: 14000,
+        category: "ensaladas",
+        image: "Imagenes/cesar.jpg?height=200&width=300",
+      },
+      {
+        id: 4,
+        name: "Pasta Carbonara",
+        description: "Spaghetti con panceta, huevo, parmesano y pimienta negra",
+        price: 18000,
+        category: "pastas",
+        image: "Imagenes/carbonara.jpg?height=200&width=300",
+        popular: true,
+      },
+      {
+        id: 5,
+        name: "Pizza Pepperoni",
+        description: "Salsa de tomate, mozzarella y pepperoni",
+        price: 16000,
+        category: "pizzas",
+        image: "Imagenes/pizza.jpg?height=200&width=300",
+      },
+      {
+        id: 6,
+        name: "Hamburguesa BBQ",
+        description: "Carne de res, salsa BBQ, cebolla caramelizada, bacon y queso cheddar",
+        price: 19000,
+        category: "hamburguesas",
+        image: "Imagenes/bbq.webp?height=200&width=300",
+      },
+      {
+        id: 7,
+        name: "Ensalada Griega",
+        description: "Tomate, pepino, aceitunas, queso feta, cebolla roja y aceite de oliva",
+        price: 15000,
+        category: "ensaladas",
+        image: "Imagenes/griega.jpg?height=200&width=300",
+      },
+      {
+        id: 8,
+        name: "Ravioles de Ricota",
+        description: "Ravioles rellenos de ricota y espinaca con salsa de tomate",
+        price: 18500,
+        category: "pastas",
+        image: "Imagenes/ravioles.webp?height=200&width=300",
+      },
+      {
+        id: 9,
+        name: "Tiramisu",
+        description: "Postre italiano con café, mascarpone y cacao",
+        price: 8000,
+        category: "postres",
+        image: "Imagenes/tiramisu.webp?height=200&width=300",
+      },
+      {
+        id: 10,
+        name: "Cheesecake",
+        description: "Tarta de queso con base de galletas y frutos rojos",
+        price: 9000,
+        category: "postres",
+        image: "Imagenes/cheese.jpg?height=200&width=300",
+        popular: true,
+      },
+    ];
+
+    // --- Funciones Principales ---
+
+    function renderMenuItems(items) {
+      menuItemsContainer.innerHTML = ''; 
+
+      if (items.length === 0) {
+        noItemsMessage.style.display = 'block'; 
+      } else {
+        noItemsMessage.style.display = 'none';
+        items.forEach(item => {
+          const itemCard = document.createElement('div');
+          itemCard.className = 'menu-item-card';
+
+          itemCard.innerHTML = `
+            <div class="menu-item-image-container">
+              <img src="${item.image || '/placeholder.svg'}" alt="${item.name}" class="menu-item-image" />
+              ${item.popular ? '<span class="popular-tag">Popular</span>' : ''}
+            </div>
+            <div class="menu-item-details">
+              <h3 class="menu-item-name">${item.name}</h3>
+              <p class="menu-item-description">${item.description}</p>
+              <div class="menu-item-footer">
+                <span class="menu-item-price">$${item.price}</span>
+                <button class="add-to-cart-button">
+                  Agregar
+                </button>
+              </div>
+            </div>
+          `;
+          menuItemsContainer.appendChild(itemCard);
+        });
+      }
+    }
+
+
+    function renderCategoryFilters() {
+      categoryFiltersContainer.innerHTML = '';
+      categoriesConfig.forEach(category => {
+        const button = document.createElement('button');
+        button.id = `category-btn-${category.id}`; 
+        button.className = `category-button ${selectedCategory === category.id ? 'active' : ''}`;
+        button.innerHTML = `${category.icon} ${category.name}`;
+        button.addEventListener('click', () => {
+          setSelectedCategory(category.id); 
+        });
+        categoryFiltersContainer.appendChild(button);
+      });
+    }
+
+    function applyFiltersAndRender() {
+      let currentFiltered = [...menuItems];
+
+      if (selectedCategory !== "all") {
+        currentFiltered = currentFiltered.filter(item => item.category === selectedCategory);
+      }
+
+      if (searchTerm) {
+        const lowerCaseSearchTerm = searchTerm.toLowerCase();
+        currentFiltered = currentFiltered.filter(item =>
+          item.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+          item.description.toLowerCase().includes(lowerCaseSearchTerm)
+        );
+      }
+      
+      filteredItems = currentFiltered; 
+      renderMenuItems(filteredItems);
+      updateCategoryButtonStates(); 
+    }
+
+    function updateCategoryButtonStates() {
+        categoriesConfig.forEach(category => {
+            const button = document.getElementById(`category-btn-${category.id}`);
+            if (button) {
+                if (selectedCategory === category.id) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            }
+        });
+    }
+
+    function setSelectedCategory(categoryId) {
+        selectedCategory = categoryId;
+        applyFiltersAndRender();
+    }
+
+
+    function setSearchTerm(term) {
+        searchTerm = term;
+        applyFiltersAndRender();
+    }
+
+
+    // --- Event Listeners ---
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+      setTimeout(() => {
+        menuItems = mockMenuData; 
+        applyFiltersAndRender(); 
+        renderCategoryFilters(); 
+
+        // Esconder la pa´gina de "cargando", mostrar contenido principal
+        loadingScreen.style.display = 'none';
+        mainContent.style.display = 'block';
+      }, 1000); 
+    });
+
+    // Search input change listener
+    searchInput.addEventListener('input', (event) => {
+      setSearchTerm(event.target.value);
+    });
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maxi's Blog</title>
+    <link rel="icon" href="" type="image/x-icon">
+    <link rel=stylesheet href="fondo.css">
+    <style>
+        body {
+            padding-top: 60px;
+            background-color: gold;
+        }
+
+        aside {
+            background-color: gold;
+            width: 90vw;
+            height: auto;
+        }
+
+        main {
+            display: flex;
+        }
+
+        * {
+            margin:0 ;
+            padding:0 ;
+        }
+        article {
+            background-color:gold;
+            width: 100%;
+            height: auto;
+        }
+
+        li {
+            margin-right: 1rem;
+            list-style-type: none;
+        }
+
+        .banner-img {
+            width: 100vw;
+            height: auto;
+            display: block;
+            max-width: 100%;
+        }
+
+        .stussy-img {
+            margin: 10px;
+        }
+
+        .article-img {
+            width: 100vw;
+            height: auto;
+            display: block;
+            max-width: 100%;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color:  rgb(235, 200, 5);
+            padding: 20px ;
+            font-family: 'Arial Black', sans-serif;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 999;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 40px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background-color: crimson;
+        }
+
+        nav ul li a {
+            color: #000000;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            background-color: #800020;
+            color: #FFFFFF;
+        }
+
+        form {
+            height: 100vh;
+            margin: 10%;
+
+        }
+
+        .maximg {
+            display: flex;
+            border-radius: 100px;
+            margin: 10%;
+        }
+
+        footer {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            margin-top: 0;
+            height: 25px;
+        }
+
+        html,body {
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 0;
+            }
+
+            nav {
+                justify-content: center;
+                position: static;
+                width: auto;
+
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul li {
+                margin: -8px 0;
+                background-color: crimson;
+            }
+
+            main {
+            flex-direction: column;
+            }
+            
+            section {
+                scroll-margin-top: 100px;
+            }
+
+            article {
+                background-color: gold;
+                height: 70%;
+            }
+
+            article, aside {
+                width: 100%;
+            }
+
+            aside {
+                order: 0;
+                height: auto;
+            }
+
+            h1, h2 {
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <nav style="display: flex;">
+        <ul style="display: flex;">
+            <li><a href="Blog.html">Home</a></li>
+            <li><a href="articulos.html">Articulos</a></li>
+            <li><a href=index.html>LinkTree</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <article>
+            <section>
+                <h2 style="font-size: 75px;margin: 10px;">Stüssy: El Surf que Conquistó la Moda Urbana</h2>
+                <p style="font-size: 20px;margin: 10px;">Año de fundación: 1980 (Laguna Beach, California)</p>
+                <p style="font-size: 20px;margin: 10px;">Fundador: Shawn Stussy</p>
+                <img style="width: 600px;" class="article-img" src="Imagenes2/ShawnStussy.jpeg" alt="Stussy Founder">
+                <p style="font-weight:bold; font-size: 30px;margin: 10px;">De tablas a remeras</p>
+                <p style="font-size: 14px;margin: 10px;">Stüssy nació casi por accidente: Shawn firmaba sus tablas de surf con un garabato que pronto estampó en camisetas para venderlas en la playa. Aquellas prendas resonaron con la cultura skate y punk californiana, y así surgió uno de los primeros labels que fusionó deporte, música y arte callejero.</p>
+                <img style="width: 400px;" class="article-img" src="Imagenes2/stussygirls.jpg" alt="Stussy Girls">
+                <p style="font-weight:bold; font-size: 30px;margin: 10px;">Años 90: Globalización DIY</p>
+                <p style="font-size: 14px;margin: 10px;">La marca viajó con músicos de gira y repartidores de discos, creando “tribus” antes de que existieran las redes sociales. Su modelo de distribución selectiva —“chapter stores” en ciudades‑clave— introdujo la lógica del hype: escasez, colaboraciones artísticas y lanzamientos sorpresa.</p>
+                <p style="font-weight:bold; font-size: 30px;margin: 10px;">Legado</p>
+                <p style="font-size: 14px;margin: 10px;">Stüssy fijó las coordenadas del streetwear moderno: logos audaces, inspiración subcultural y colaboraciones tempranas con Nike, Dover Street Market y artistas como Futura. Hoy, la firma sigue dictando tendencias con cápsulas nostálgicas que reeditan sus gráficos ochenteros.</p>
+                <p style="font-weight:bold; font-size: 12px;margin: 10px;">Fecha de Publicación: 02/06/2025</p>
+                <br>
+                <br>
+            </section>
+            
+        </article>
+        <aside>
+        </aside>
+    </main>
+</body>

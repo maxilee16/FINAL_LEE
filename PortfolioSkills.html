@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Habilidades - Maximiliano Lee</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Spectral:wght@400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Josefin Sans', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #eff6ff, #ffffff); 
+      display: flex;
+      flex-direction: column; 
+    }
+
+    /* Nav */
+    nav {
+      background-color: #f0f8ff;
+      border-bottom: 2px solid black;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      flex-wrap: wrap;
+    }
+
+    nav div {
+      font-weight: bolder;
+      font-size: 25px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav li {
+      border: 1px solid black;
+      background-color: white;
+    }
+
+    nav a.active {
+      background-color: #eef36d;
+    }
+
+    nav a {
+      display: block;
+      padding: 8px 16px;
+      color: black;
+      text-decoration: none;
+    }
+
+    /* Contenido Principal */
+    .container {
+      padding: 32px 16px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      flex-grow: 1; 
+    }
+
+    /* Títulos de Página */
+    .page-title {
+      font-family: 'Josefin Sans', sans-serif; 
+      font-size: 50px; 
+      font-weight: bold; 
+      color: cornflowerblue; 
+      text-align: center; 
+      margin-bottom: 32px;
+    }
+
+    /* Titulos de Sección */
+    .section-title {
+      font-family: 'Josefin Sans', sans-serif; 
+      font-size: 30px;
+      color: #92400e; 
+      text-align: center; 
+      margin-bottom: 32px; 
+    }
+
+    /* Sección de Habilidades */
+    .skills-section {
+      margin-bottom: 64px;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 32px;
+      max-width: 896px; 
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .skill-item-card {
+      background-color: white;
+      padding: 24px; 
+      border-radius: 8px; 
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
+    }
+
+    .skill-header {
+      display: flex;
+      justify-content: space-between; 
+      align-items: center;
+      margin-bottom: 8px; 
+    }
+
+    .skill-name {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 600; 
+      color: #1a202c; 
+    }
+
+    .skill-level-text {
+      font-family: 'Josefin Sans', sans-serif; 
+      font-size: 14px; 
+      color: #4a5568; 
+    }
+
+    .progress-bar-container {
+      width: 100%; 
+      background-color: #e2e8f0; 
+      border-radius: 9999px;
+      height: 12px; 
+    }
+
+    .progress-bar-fill {
+      height: 12px; 
+      border-radius: 9999px; 
+      transition: width 1s ease-out; 
+    }
+
+    /* Barras de nivel de Habilidades */
+    .bg-orange-500 { background-color: #f97316; }
+    .bg-blue-500 { background-color: #3b82f6; }
+    .bg-yellow-500 { background-color: #f59e0b; }
+    .bg-purple-500 { background-color: #a855f7; }
+
+    /* Sección de Experiencias */
+    .experience-section {
+      margin-bottom: 64px; 
+    }
+
+    .experience-list-wrapper {
+      max-width: 896px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .experience-item-card {
+      background-color: white;
+      padding: 24px;
+      border-radius: 8px; 
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      margin-bottom: 24px;
+      border-left: 4px solid #3b82f6; 
+    }
+
+    .experience-header {
+      display: flex;
+      flex-direction: column; 
+      margin-bottom: 12px; 
+    }
+
+    .experience-title {
+      font-family: 'Josefin Sans', sans-serif; 
+      font-size: 20px; 
+      font-weight: bold; 
+      color: #1a202c;
+    }
+
+    .experience-period {
+      font-family: 'Josefin Sans', sans-serif; 
+      font-size: 14px;
+      color: #2c5282; 
+      background-color: #ebf8ff; 
+      padding: 4px 12px; 
+      border-radius: 9999px;
+      align-self: flex-start;
+      margin-top: 8px; 
+    }
+
+    .experience-company {
+      font-family: 'Josefin Sans', sans-serif; 
+      font-size: 18px; 
+      color: #92400e; 
+      margin-bottom: 12px;
+    }
+
+    .experience-description {
+      font-family: 'Spectral', serif;
+      color: #4a5568; 
+    }
+
+    /* Sección de Otras Habilidades */
+    .additional-skills-section {
+      background-color: #ebf8ff; 
+      padding: 32px; 
+      border-radius: 8px; 
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
+    }
+
+    .additional-skills-section h3 {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 24px; 
+      color: #92400e;
+      text-align: center;
+      margin-bottom: 24px; 
+    }
+
+    .additional-skills-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr); 
+      gap: 24px;
+    }
+
+    .additional-skill-item {
+      text-align: center;
+    }
+
+    .additional-skill-icon {
+      font-size: 40px; 
+      margin-bottom: 12px; 
+    }
+
+    .additional-skill-title {
+      font-family: 'Josefin Sans', sans-serif; 
+      font-size: 18px; 
+      font-weight: 600;
+      color: #1a202c; 
+      margin-bottom: 8px; 
+    }
+
+    .additional-skill-description {
+      font-family: 'Spectral', serif; 
+      color: #4a5568;
+      font-size: 14px; 
+    }
+
+    /* Sección de CV */
+    .cv-download-section {
+      text-align: center;
+      margin-top: 48px; 
+    }
+
+    .cv-download-section h3 {
+      font-family: 'Josefin Sans', sans-serif; 
+      font-size: 24px; 
+      color: #92400e;
+      margin-bottom: 24px;
+    }
+
+    .cv-download-content {
+      display: flex;
+      flex-direction: column; 
+      align-items: center;
+      gap: 16px;
+    }
+
+    .cv-download-button {
+      background-color: #3b82f6; 
+      color: white;
+      padding: 12px 32px; 
+      border-radius: 8px; 
+      transition: background-color 0.15s ease-in-out;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none; 
+    }
+
+    .cv-download-button:hover {
+      background-color: #2563eb; 
+    }
+
+    .cv-download-text {
+      font-family: 'Spectral', serif; 
+      color: #4a5568;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    footer a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+      transition: color 0.3s ease-in-out;
+    }
+    
+    footer a:hover {
+        color: #90cdf4; 
+    }
+
+    footer p {
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    /* MEDIA QUERIES */
+    @media (min-width: 768px) { 
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr); 
+      }
+      .experience-header {
+        flex-direction: row; 
+        justify-content: space-between; 
+        align-items: flex-start; 
+      }
+      .experience-period {
+        margin-top: 0; 
+      }
+      .additional-skills-grid {
+        grid-template-columns: repeat(3, 1fr); 
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .page-title {
+        font-size: 40px;
+      }
+      .section-title {
+        font-size: 26px;
+      }
+      .skill-name, .experience-title, .additional-skill-title {
+        font-size: 16px;
+      }
+      .skill-level-text, .experience-period, .experience-company, .additional-skill-description {
+        font-size: 13px;
+      }
+      .experience-description {
+        font-size: 14px;
+      }
+      .additional-skills-section h3, .cv-download-section h3 {
+        font-size: 20px;
+      }
+      .cv-download-button {
+        padding: 10px 24px;
+        font-size: 16px;
+      }
+      .cv-download-text {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav div {
+        font-size: 20px;
+      }
+      .page-title {
+        font-size: 30px;
+      }
+      .section-title {
+        font-size: 22px;
+      }
+      .skill-name {
+        font-size: 15px;
+      }
+      .skill-level-text {
+        font-size: 12px;
+      }
+      .experience-title {
+        font-size: 16px;
+      }
+      .experience-company {
+        font-size: 14px;
+      }
+      .experience-description {
+        font-size: 13px;
+      }
+      .additional-skills-section h3, .cv-download-section h3 {
+        font-size: 18px;
+      }
+      .cv-download-button {
+        padding: 8px 20px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div>ML</div>
+    <ul>
+      <li><a href="PortfolioMain.html">Home</a></li>
+      <li><a href="PortfolioAbout.html">Sobre Mí</a></li>
+      <li><a href="PortfolioProjects.html">Proyectos</a></li>
+      <li><a href="PortfolioSkills.html" class="active">Habilidades</a></li>
+      <li><a href="PortfolioContact.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- Contenido Principal -->
+  <main class="container">
+    <section class="max-w-6xl mx-auto">
+      <h1 class="page-title">
+        Habilidades y Experiencia
+      </h1>
+
+      <!-- Habilidades -->
+      <div class="skills-section">
+        <h2 class="section-title">Habilidades Técnicas</h2>
+        <div id="skills-grid" class="skills-grid">
+        </div>
+      </div>
+
+      <!-- Experiencia y Educación -->
+      <div class="experience-section">
+        <h2 class="section-title">Experiencia y Educación</h2>
+        <div id="experience-list" class="experience-list-wrapper">
+        </div>
+      </div>
+
+      <!-- Otras Habilidades -->
+      <div class="additional-skills-section">
+        <h3>Otras Habilidades</h3>
+        <div class="additional-skills-grid">
+          <div class="additional-skill-item">
+            <div class="additional-skill-icon">🎨</div>
+            <h4 class="additional-skill-title">Diseño UI/UX</h4>
+            <p class="additional-skill-description">
+              Principios de diseño, prototipado, experiencia de usuario
+            </p>
+          </div>
+          <div class="additional-skill-item">
+            <div class="additional-skill-icon">📱</div>
+            <h4 class="additional-skill-title">Responsive Design</h4>
+            <p class="additional-skill-description">Diseño adaptable, mobile-first, media queries</p>
+          </div>
+          <div class="additional-skill-item">
+            <div class="additional-skill-icon">🚀</div>
+            <h4 class="additional-skill-title">Emprendimiento</h4>
+            <p class="additional-skill-description">
+              Desarrollo de negocios, marketing digital, innovación
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CV  -->
+      <div class="cv-download-section">
+        <h3>¿Quieres saber más?</h3>
+        <div class="cv-download-content">
+          <a href="Maximiliano Lee CV (Español).pdf" class="cv-download-button">
+            Descargar CV (PDF)
+          </a>
+          <p class="cv-download-text">
+            O contactame directamente para conocer más sobre mi experiencia
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div>
+      <a href="https://github.com/maxilee16" target="_blank" rel="noreferrer">GitHub</a>
+      <a href="https://www.linkedin.com/in/maximiliano-lee-b12687174/" target="_blank" rel="noreferrer">LinkedIn</a>
+      <a href="https://www.instagram.com/maxilee_/?hl=es-la" target="_blank" rel="noreferrer">Instagram</a>
+    </div>
+    <p>© 2025 Maximiliano Lee - Trabajo Práctico Nro. 3 - Diseño y Desarrollo Web</p>
+  </footer>
+
+  <script>
+
+    // Datos de Habilidades y Experiencias //
+    const skillsData = [
+      { name: "HTML5", level: 60, colorClass: "bg-orange-500" },
+      { name: "CSS3", level: 50, colorClass: "bg-blue-500" },
+      { name: "JavaScript", level: 30, colorClass: "bg-yellow-500" },
+      { name: "Figma", level: 60, colorClass: "bg-purple-500" },
+    ];
+
+    const experienceData = [
+      {
+        title: "Estudiante de Negocios Digitales",
+        company: "UADE",
+        period: "2023 - Presente",
+        description: "Cursando la Licenciatura en Negocios Digitales con enfoque en tecnología y emprendimiento.",
+      },
+      {
+        title: "Proyecto Personal - Quabsas",
+        company: "Emprendimiento Propio",
+        period: "2020-2025",
+        description: "Desarrollo de sitio web E-Commerce de venta de indumentaria femenina al por mayor.",
+      },
+      {
+        title: "Pasante en Jp Morgan",
+        company: "UADE",
+        period: "2025",
+        description: "Payments Implementations Client Onboarding Tech Team.",
+      },
+    ];
+
+    // DOM
+    const skillsGrid = document.getElementById('skills-grid');
+    const experienceList = document.getElementById('experience-list');
+
+
+    function renderSkills() {
+      if (!skillsGrid) return; 
+
+      skillsGrid.innerHTML = '';
+      skillsData.forEach(skill => {
+        const skillCard = document.createElement('div');
+        skillCard.className = 'skill-item-card';
+        skillCard.innerHTML = `
+          <div class="skill-header">
+            <span class="skill-name">${skill.name}</span>
+            <span class="skill-level-text">${skill.level}%</span>
+          </div>
+          <div class="progress-bar-container">
+            <div
+              class="progress-bar-fill ${skill.colorClass}"
+              style="width: ${skill.level}%"
+            ></div>
+          </div>
+        `;
+        skillsGrid.appendChild(skillCard);
+      });
+    }
+
+    function renderExperience() {
+      if (!experienceList) return; 
+
+      experienceList.innerHTML = ''; 
+      experienceData.forEach(exp => {
+        const experienceCard = document.createElement('div');
+        experienceCard.className = 'experience-item-card';
+        experienceCard.innerHTML = `
+          <div class="experience-header">
+            <h3 class="experience-title">${exp.title}</h3>
+            <span class="experience-period">${exp.period}</span>
+          </div>
+          <h4 class="experience-company">${exp.company}</h4>
+          <p class="experience-description">${exp.description}</p>
+        `;
+        experienceList.appendChild(experienceCard);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderSkills();
+      renderExperience();
+    });
+  </script>
+
+</body>
+</html>

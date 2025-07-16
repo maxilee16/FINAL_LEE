@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadora Básica - Maximiliano Lee</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Spectral:wght@400;600&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Josefin Sans', sans-serif;
+      min-height: 100vh;
+      background-color: #f0f8ff;
+    }
+
+    /* Navegación */
+    nav {
+      background-color: #f0f8ff;
+      border-bottom: 2px solid black;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      flex-wrap: wrap;
+    }
+
+    nav div {
+      font-weight: bolder;
+      font-size: 25px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav li {
+      border: 1px solid black;
+      background-color: white;
+    }
+
+    nav a.active {
+      background-color: #eef36d;
+    }
+
+    nav a {
+      display: block;
+      padding: 8px 16px;
+      color: black;
+      text-decoration: none;
+    }
+
+    /* Contenedor Principal */
+    .container {
+      padding: 20px; 
+      max-width: 1200px; 
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .calculator-header {
+      text-align: center; 
+      margin-bottom: 32px;
+    }
+
+    .calculator-header h1 {
+      font-family: 'Josefin Sans', sans-serif; 
+      font-size: 50px; 
+      font-weight: bold;
+      color: cornflowerblue; 
+      margin-bottom: 16px; 
+    }
+
+    .calculator-header p {
+      font-family: 'Spectral', serif; 
+      font-size: 18px; 
+      color: #4a5568; 
+      margin-bottom: 24px; 
+    }
+
+    .back-link {
+      color: #2c5282; 
+      text-decoration: none; 
+      font-family: 'Josefin Sans', sans-serif; 
+    }
+
+    .back-link:hover {
+        color: #2a4365; 
+        text-decoration: underline;
+    }
+
+    /* --- Calculator Body --- */
+    .calculator-wrapper {
+      max-width: 448px; 
+      margin: 0 auto; 
+    }
+
+    .calculator-main {
+      background-color: #2d3748; 
+      padding: 24px; 
+      border-radius: 8px; 
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); 
+    }
+
+    /* Display de la calculadora */
+    .calculator-display-container {
+      background-color: black;
+      padding: 16px; 
+      border-radius: 4px; 
+      margin-bottom: 16px; 
+    }
+
+    #display {
+      color: white;
+      text-align: right; 
+      font-size: 30px; 
+      font-family: 'Roboto Mono', monospace; 
+      overflow: hidden;
+      white-space: nowrap; 
+      min-height: 1.2em; 
+    }
+
+    /* Botones de la calculadora */
+    .calculator-buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); 
+      gap: 8px; 
+    }
+
+    .calc-button {
+      font-weight: bold; 
+      padding: 16px 16px; 
+      border-radius: 4px; 
+      transition: background-color 0.15s ease-in-out; 
+      border: none; 
+      cursor: pointer;
+      color: white;
+    }
+
+    /* Color de Botones */
+    .bg-red-500 { background-color: #ef4444; }
+    .bg-red-500:hover { background-color: #dc2626; } 
+
+    .bg-orange-500 { background-color: #f97316; }
+    .bg-orange-500:hover { background-color: #ea580c; } 
+
+    .bg-blue-500 { background-color: #3b82f6; }
+    .bg-blue-500:hover { background-color: #2563eb; } 
+
+    .bg-gray-600 { background-color: #4b5563; }
+    .bg-gray-600:hover { background-color: #374151; } 
+
+    .bg-green-500 { background-color: #22c55e; }
+    .bg-green-500:hover { background-color: #16a34a; } 
+
+    .col-span-2 {
+      grid-column: span 2 / span 2;
+    }
+
+    /* Sección de descripción de funciones */
+    .functions-section {
+      margin-top: 32px; 
+      background-color: #ebf8ff; 
+      padding: 24px; 
+      border-radius: 8px; 
+    }
+
+    .functions-section h3 {
+      font-family: 'Josefin Sans', sans-serif; 
+      font-size: 20px; 
+      color: #92400e; 
+      margin-bottom: 16px; 
+    }
+
+    .functions-section ul {
+      list-style: none; 
+      padding: 0;
+      margin: 0;
+      font-family: 'Spectral', serif;
+      color: #4a5568; 
+      line-height: 1.5; 
+    }
+
+    .functions-section li strong {
+        font-weight: bold; 
+    }
+
+    /* Sección de Tecnologías */
+    .technologies-section {
+      margin-top: 24px; 
+      text-align: center; 
+    }
+
+    .technologies-card {
+      background-color: white;
+      padding: 16px; 
+      border-radius: 8px; 
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    }
+
+    .technologies-card h3 {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 18px; 
+      color: #92400e; 
+      margin-bottom: 12px;
+    }
+
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px; 
+    }
+
+    .tech-tag-item {
+      padding: 4px 12px; 
+      border-radius: 9999px; 
+      font-size: 14px; 
+    }
+
+    /* Etiquetas de Tecnologías utilizadas */
+    .tech-tag-yellow { background-color: #fcd34d; color: black; } 
+    .tech-tag-blue { background-color: #3b82f6; color: white; } 
+    .tech-tag-green { background-color: #22c55e; color: white; } 
+
+
+    /* Footer */
+    footer {
+      background-color: #333; 
+      color: white;
+      padding: 20px; 
+      text-align: center;
+      margin-top: 48px; 
+    }
+
+    footer a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+      transition: color 0.3s ease-in-out;
+    }
+    
+    footer a:hover {
+        color: #90cdf4; 
+    }
+
+    footer p {
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    /* MEDIA QUERIES */
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .calculator-header h1 {
+        font-size: 40px; 
+      }
+      .calculator-header p {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav div {
+        font-size: 20px;
+      }
+      .calculator-header h1 {
+        font-size: 30px;
+      }
+      .calculator-header p {
+        font-size: 14px;
+      }
+      .back-link {
+        font-size: 14px;
+      }
+      .calc-button {
+        padding: 12px; 
+        font-size: 16px;
+      }
+      .functions-section h3, .technologies-card h3 {
+        font-size: 18px;
+      }
+      .functions-section ul li, .tech-tag-item {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div>ML</div>
+    <ul>
+      <li><a href="PortfolioMain.html">Home</a></li>
+      <li><a href="PortfolioAbout.html">Sobre Mí</a></li>
+      <li><a href="PortfolioProjects.html" class="active">Proyectos</a></li>
+      <li><a href="PortfolioSkills.html">Habilidades</a></li>
+      <li><a href="PortfolioContact.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <div class="calculator-header">
+      <h1>🧮 Calculadora Básica</h1>
+      <p>
+        Calculadora con operaciones básicas: suma, resta, multiplicación, división, porcentaje y raíz cuadrada
+      </p>
+      <a href="PortfolioProjects.html" class="back-link">
+        ← Volver a Proyectos
+      </a>
+    </div>
+
+    <div class="calculator-wrapper">
+      <div class="calculator-main">
+        <div class="calculator-display-container">
+          <div id="display">0</div>
+        </div>
+
+        <div class="calculator-buttons">
+          <button onclick="clearDisplay()" class="calc-button bg-red-500">C</button>
+          <button onclick="calculateSquareRoot()" class="calc-button bg-orange-500">√</button>
+          <button onclick="calculatePercentage()" class="calc-button bg-orange-500">%</button>
+          <button onclick="performOperation('÷')" class="calc-button bg-blue-500">÷</button>
+
+          <button onclick="inputNumber('7')" class="calc-button bg-gray-600">7</button>
+          <button onclick="inputNumber('8')" class="calc-button bg-gray-600">8</button>
+          <button onclick="inputNumber('9')" class="calc-button bg-gray-600">9</button>
+          <button onclick="performOperation('×')" class="calc-button bg-blue-500">×</button>
+
+          <button onclick="inputNumber('4')" class="calc-button bg-gray-600">4</button>
+          <button onclick="inputNumber('5')" class="calc-button bg-gray-600">5</button>
+          <button onclick="inputNumber('6')" class="calc-button bg-gray-600">6</button>
+          <button onclick="performOperation('-')" class="calc-button bg-blue-500">-</button>
+
+          <button onclick="inputNumber('1')" class="calc-button bg-gray-600">1</button>
+          <button onclick="inputNumber('2')" class="calc-button bg-gray-600">2</button>
+          <button onclick="inputNumber('3')" class="calc-button bg-gray-600">3</button>
+          <button onclick="performOperation('+')" class="calc-button bg-blue-500">+</button>
+
+          <button onclick="inputNumber('0')" class="calc-button bg-gray-600 col-span-2">0</button>
+          <button onclick="inputDecimal()" class="calc-button bg-gray-600">.</button>
+          <button onclick="performOperation('=')" class="calc-button bg-green-500">=</button>
+        </div>
+      </div>
+
+      <div class="functions-section">
+        <h3>Funciones Disponibles:</h3>
+        <ul>
+          <li>• <strong>Operaciones básicas:</strong> +, -, ×, ÷</li>
+          <li>• <strong>Porcentaje:</strong> Botón %</li>
+          <li>• <strong>Raíz cuadrada:</strong> Botón √</li>
+          <li>• <strong>Limpiar:</strong> Botón C</li>
+          <li>• <strong>Decimales:</strong> Botón .</li>
+        </ul>
+      </div>
+
+      <div class="technologies-section">
+        <div class="technologies-card">
+          <h3>Tecnologías:</h3>
+          <div class="tech-tags">
+            <span class="tech-tag-item tech-tag-yellow">JavaScript</span>
+            <span class="tech-tag-item tech-tag-blue">DOM Manipulation</span>
+            <span class="tech-tag-item tech-tag-green">Math Operations</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div>
+      <a href="https://github.com/maxilee16" target="_blank" rel="noreferrer">GitHub</a>
+      <a href="https://www.linkedin.com/in/maximiliano-lee-b12687174/" target="_blank" rel="noreferrer">LinkedIn</a>
+      <a href="https://www.instagram.com/maxilee_/?hl=es-la" target="_blank" rel="noreferrer">Instagram</a>
+    </div>
+    <p>© 2025 Maximiliano Lee - Trabajo Práctico Nro. 3 - Diseño y Desarrollo Web</p>
+  </footer>
+
+  <script>
+    // Lógica de Calculadora (Vanilla JavaScript) //
+    let displayValue = '0';
+    let previousValue = null;
+    let currentOperation = null;
+    let waitingForSecondOperand = false;
+
+    const displayElement = document.getElementById('display');
+
+    function updateDisplay() {
+      displayElement.innerText = displayValue;
+    }
+
+    function inputNumber(num) {
+      if (waitingForSecondOperand) {
+        displayValue = String(num);
+        waitingForSecondOperand = false;
+      } else {
+        displayValue = displayValue === '0' ? String(num) : displayValue + num;
+      }
+      updateDisplay();
+    }
+
+    function inputDecimal() {
+      if (waitingForSecondOperand) {
+        displayValue = '0.';
+        waitingForSecondOperand = false;
+      } else if (displayValue.indexOf('.') === -1) {
+        displayValue += '.';
+      }
+      updateDisplay();
+    }
+
+    function clearDisplay() {
+      displayValue = '0';
+      previousValue = null;
+      currentOperation = null;
+      waitingForSecondOperand = false;
+      updateDisplay();
+    }
+
+    function performOperation(nextOperation) {
+      const inputValue = parseFloat(displayValue);
+
+      if (previousValue === null) {
+        previousValue = inputValue;
+      } else if (currentOperation) {
+        const result = calculate(previousValue, inputValue, currentOperation);
+        displayValue = String(result);
+        previousValue = result;
+      }
+
+      waitingForSecondOperand = true;
+      currentOperation = nextOperation;
+      updateDisplay();
+    }
+
+    function calculate(firstValue, secondValue, operation) {
+      switch (operation) {
+        case '+':
+          return firstValue + secondValue;
+        case '-':
+          return firstValue - secondValue;
+        case '×':
+          return firstValue * secondValue;
+        case '÷':
+          if (secondValue === 0) {
+            alert("No se puede dividir por cero.");
+            clearDisplay();
+            return 0;
+          }
+          return firstValue / secondValue;
+        case '%':
+          return firstValue % secondValue;
+        case '=':
+          return secondValue;
+        default:
+          return secondValue;
+      }
+    }
+
+    function calculateSquareRoot() {
+      const inputValue = parseFloat(displayValue);
+      if (inputValue < 0) {
+        alert("No se puede calcular la raíz cuadrada de un número negativo.");
+        clearDisplay();
+        return;
+      }
+      const result = Math.sqrt(inputValue);
+      displayValue = String(result);
+      waitingForSecondOperand = true; 
+      updateDisplay();
+    }
+
+    function calculatePercentage() {
+      const inputValue = parseFloat(displayValue);
+      const result = inputValue / 100;
+      displayValue = String(result);
+      waitingForSecondOperand = true; 
+      updateDisplay();
+    }
+
+    document.addEventListener('DOMContentLoaded', updateDisplay);
+
+  </script>
+
+</body>
+</html>

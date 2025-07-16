@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Spectral:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      background-color: #f0f8ff;
+      font-family: 'Josefin Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* NAVBAR */
+    nav {
+      background-color: #f0f8ff;
+      border-bottom: 2px solid black;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      flex-wrap: wrap;
+    }
+
+    nav div {
+      font-weight: bolder;
+      font-size: 25px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav li {
+      border: 1px solid black;
+      background-color: white;
+    }
+
+    nav li:first-child {
+      background-color: #eef36d;
+    }
+
+    nav a {
+      display: block;
+      padding: 8px 16px;
+      color: black;
+      text-decoration: none;
+    }
+
+    /* CONTENIDO PRINCIPAL */
+    .container {
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 50px;
+      font-weight: bold;
+      color: cornflowerblue;
+      margin: 20px 0;
+   
+      animation: twinkle 2s infinite alternate;
+    }
+
+    /* Keyframes del efecto de titilado */
+    @keyframes twinkle {
+        0% { opacity: 1; text-shadow: none; }
+        50% { opacity: 0.8; text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.3); }
+        100% { opacity: 1; text-shadow: none; }
+    }
+
+
+    h2 {
+      font-size: 30px;
+      color: saddlebrown;
+      margin: 20px 0;
+    }
+
+    h2 a:hover {
+      filter: brightness(1.5);
+    }
+
+    .profile-img {
+      margin: 40px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .profile-img img {
+      width: 680px;
+      border-radius:10px;
+      max-width: 90%;
+    }
+
+    .quote {
+      background-color: rgb(209, 233, 255);
+      font-style: italic;
+      margin: 40px auto;
+      padding: 40px;
+      color: saddlebrown;
+      font-weight: 500;
+      max-width: 600px;
+      font-size: larger;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+      border-radius: 8px;
+    }
+
+    .icons {
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .icons a {
+      transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out; 
+    }
+
+    .icons a:hover {
+      transform: scale(1.2); 
+      filter: brightness(1.2); 
+    }
+
+    .projects {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+
+    .projects a {
+      background-color: #f0f8ff;
+      padding: 20px;
+      border: 1px solid black;
+      text-decoration: none;
+      color: black;
+      width: 200px;
+      text-align: center; 
+      border-radius: 8px; 
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
+    }
+
+    .projects a:hover {
+      transform: translateY(-5px); 
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+      background-color: #90cdf4;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+      transition: color 0.3s ease-in-out; 
+    }
+
+    footer a:hover {
+        color: #90cdf4; 
+    }
+
+    footer p {
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    /* MEDIA QUERIES */
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+
+      .quote {
+        font-size: 16px;
+        padding: 20px;
+      }
+
+      .projects a {
+        width: 90%;
+      }
+
+      .icons span {
+        font-size: 40px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+
+      .projects {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div>ML</div>
+    <ul>
+      <li><a href="PortfolioMain.html">Home</a></li>
+      <li><a href="PortfolioAbout.html">Sobre Mí</a></li>
+      <li><a href="PortfolioProjects.html">Proyectos</a></li>
+      <li><a href="PortfolioSkills.html">Habilidades</a></li>
+      <li><a href="PortfolioContact.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- CONTENIDO -->
+  <div class="container">
+    <h1>Maximiliano Lee</h1>
+
+    <h2>
+      Soy Estudiante de Negocios Digitales en
+      <a href="https://www.uade.edu.ar/facultad-de-ciencias-economicas/licenciatura-en-negocios-digitales/" target="_blank" rel="noreferrer" style="color:saddlebrown;text-decoration: none;">UADE</a>
+    </h2>
+
+    <p style="font-size: 20px; margin: 20px 0;">Me gustan la tecnología, los negocios, la moda y la música</p>
+
+    <div class="profile-img">
+      <img src="Imagenes/MM.jpeg" alt="Fotografía de Maxi Lee" />
+    </div>
+
+    <div class="quote">
+      "Vida, Fe y Esperanza"
+    </div>
+
+    <a href="https://www.instagram.com/maxilee_/?hl=es-la" target="_blank" rel="noreferrer" style="text-decoration: none;">Conoceme Más</a>
+
+    <p style="margin: 20px 0; line-height: 2;">Un <br /> Paso <br />a la <br /> vez</p>
+
+    <div class="icons">
+      <a href="https://www.youtube.com/watch?v=wCw-W-2Rs0k&ab_channel=ConnorPrice" target="_blank" rel="noreferrer">
+        <img src="Iconos/Trofeo.webp" alt="Icono de Trofeo" width="50" />
+      </a>
+      <a href="https://quabsas.com.ar/" target="_blank" rel="noreferrer">
+        <span style="font-size: 40px;">🛍️</span>
+      </a>
+    </div>
+
+    <h3 style="font-size: 24px; color: saddlebrown; margin: 40px 0 20px 0;">Mis Proyectos Interactivos</h3>
+
+    <div class="projects">
+      <a href="PortSound.html">
+        <h4>🎵 Botonera de Sonidos</h4>
+        <p style="font-size: 14px;">Reproduce diferentes sonidos</p>
+      </a>
+      <a href="PortCalcu.html">
+        <h4>🧮 Calculadora</h4>
+        <p style="font-size: 14px;">Calculadora básica</p>
+      </a>
+      <a href="PortMenu.html">
+        <h4>🍕 Menú Restaurante</h4>
+        <p style="font-size: 14px;">Menú dinámico desde JSON</p>
+      </a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+        <a href="https://github.com/maxilee16" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/maximiliano-lee-b12687174/" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href="https://www.instagram.com/maxilee_/?hl=es-la" target="_blank" rel="noreferrer">Instagram</a>
+    </div>
+    <p style="font-size: 12px;">© 2025 Maximiliano Lee - Trabajo Práctico Nro. 3 - Diseño y Desarrollo Web</p>
+  </footer>
+
+</body>
+</html>

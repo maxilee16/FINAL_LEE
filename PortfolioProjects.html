@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Proyectos - Maximiliano Lee</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Spectral:wght@400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Josefin Sans', sans-serif;
+      min-height: 100vh;
+      background-color: #f0f8ff;
+    }
+
+    /* Nav */
+    nav {
+      background-color: #f0f8ff;
+      border-bottom: 2px solid black;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      flex-wrap: wrap;
+    }
+
+    nav div {
+      font-weight: bolder;
+      font-size: 25px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav li {
+      border: 1px solid black;
+      background-color: white; 
+    }
+
+    nav a.active {
+      background-color: #eef36d;
+    }
+
+    nav a {
+      display: block;
+      padding: 8px 16px;
+      color: black;
+      text-decoration: none;
+    }
+
+    /* Contenedor Principal */
+    .container {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .page-title {
+      font-size: 50px;
+      font-weight: bold; 
+      color: cornflowerblue; 
+      text-align: center; 
+      margin-bottom: 32px; 
+    }
+
+    .page-description {
+      font-family: 'Spectral', serif;
+      font-size: 18px;
+      color: #4a5568; 
+      text-align: center; 
+      margin-bottom: 48px; 
+      max-width: 800px; 
+      margin-left: auto; 
+      margin-right: auto; 
+    }
+
+    /* Proyectos */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px; 
+    }
+
+    .project-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .project-card:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .project-header-sound {
+      background: linear-gradient(to right, #a78bfa, #f472b6);
+      height: 128px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .project-header-calc {
+        background: linear-gradient(to right, #60a5fa, #4fd1c5);
+        height: 128px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .project-header-menu {
+        background: linear-gradient(to right, #fbbf24, #ef4444);
+        height: 128px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .project-header-emoji {
+      font-size: 96px;
+    }
+
+    .project-content {
+      padding: 24px;
+    }
+
+    .project-title {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 20px;
+      font-weight: bold;
+      color: #2d3748;
+      margin-bottom: 12px;
+    }
+
+    .project-description {
+      font-family: 'Spectral', serif;
+      color: #4a5568;
+      margin-bottom: 16px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tag-item {
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 4px; 
+    }
+
+    /* Colores de Tags */
+    .tag-blue { background-color: #ebf8ff; color: #2b6cb0; }
+    .tag-green { background-color: #e6fffa; color: #38a169; }
+    .tag-purple { background-color: #e9d8fd; color: #6b46c1; }
+    .tag-yellow { background-color: #fffde7; color: #b7791f; }
+    .tag-red { background-color: #fee2e2; color: #e53e3e; }
+    .tag-orange { background-color: #fffaf0; color: #c05621; }
+
+    .project-link {
+      background-color: #4299e1;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 4px; 
+      text-decoration: none;
+      display: inline-block;
+      transition: background-color 0.3s ease-in-out; 
+    }
+
+    .project-link:hover {
+      background-color: #3182ce;
+    }
+
+    /* Proyectos adicionales */
+    .additional-projects-section {
+      margin-top: 64px;
+    }
+
+    .additional-projects-title {
+      font-family: 'Josefin Sans', sans-serif; 
+      font-size: 28px;
+      color: #92400e;
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .additional-projects-grid {
+      display: grid;
+      grid-template-columns: 1fr; 
+      gap: 24px;
+    }
+
+    .additional-project-item {
+      background-color: #ebf8ff;
+      padding: 24px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease-in-out;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .additional-project-item:hover {
+      background-color: #bee3f8;
+    }
+
+    .additional-project-title {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 8px;
+    }
+
+    .additional-project-description {
+      color: #4a5568;
+      font-size: 14px;
+    }
+
+
+    /* --- Footer --- */
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    footer a {
+      color: white;
+      margin: 0 10px; 
+      text-decoration: none;
+      transition: color 0.3s ease-in-out; 
+    }
+    
+    footer a:hover {
+        color: #90cdf4;
+    }
+
+    footer p {
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    /* MEDIA QUERIES */
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .page-title {
+        font-size: 45px;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .additional-projects-grid {
+        grid-template-columns: 1fr; 
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-title {
+        font-size: 36px;
+      }
+
+      .page-description {
+        font-size: 16px;
+      }
+
+      .project-title {
+        font-size: 18px;
+      }
+
+      .project-description {
+        font-size: 14px;
+      }
+
+      .tag-item {
+        font-size: 10px;
+      }
+
+      .project-link {
+        padding: 6px 12px;
+        font-size: 14px;
+      }
+
+      .additional-projects-title {
+        font-size: 24px;
+      }
+
+      .additional-project-title {
+        font-size: 16px;
+      }
+
+      .additional-project-description {
+        font-size: 12px;
+      }
+
+      nav div {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div>ML</div>
+    <ul>
+      <li><a href="PortfolioMain.html">Home</a></li>
+      <li><a href="PortfolioAbout.html">Sobre Mí</a></li>
+      <li><a href="PortfolioProjects.html" class="active">Proyectos</a></li>
+      <li><a href="PortfolioSkills.html">Habilidades</a></li>
+      <li><a href="PortfolioContact.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <section>
+      <h1 class="page-title">Mis Proyectos</h1>
+
+      <p class="page-description">
+        Aquí encontrarás los tres ejercicios interactivos que desarrollé usando JavaScript. Cada proyecto demuestra
+        diferentes habilidades de programación y diseño web.
+      </p>
+
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-header-sound">
+            <span class="project-header-emoji">🎵</span>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Botonera de Sonidos</h3>
+            <p class="project-description">
+              Una colección de botones que reproducen diferentes sonidos al hacer clic. Perfecto para crear ritmos y
+              divertirse con audio.
+            </p>
+            <div class="project-tags">
+              <span class="tag-item tag-blue">JavaScript</span>
+              <span class="tag-item tag-green">Audio API</span>
+              <span class="tag-item tag-purple">CSS</span>
+            </div>
+            <a
+              href="PortSound.html"
+              class="project-link"
+            >
+              Ver Proyecto
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header-calc">
+            <span class="project-header-emoji">🧮</span>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Calculadora Básica</h3>
+            <p class="project-description">
+              Calculadora con operaciones básicas: suma, resta, multiplicación, división, porcentaje y raíz
+              cuadrada.
+            </p>
+            <div class="project-tags">
+              <span class="tag-item tag-blue">JavaScript</span>
+              <span class="tag-item tag-yellow">Math</span>
+              <span class="tag-item tag-red">DOM</span>
+            </div>
+            <a
+              href="PortCalcu.html"
+              class="project-link"
+            >
+              Ver Proyecto
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header-menu">
+            <span class="project-header-emoji">🍕</span>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Menú de Restaurante</h3>
+            <p class="project-description">
+              Menú dinámico que carga los platos desde un archivo JSON. Incluye filtros por categoría y búsqueda.
+            </p>
+            <div class="project-tags">
+              <span class="tag-item tag-blue">JavaScript</span>
+              <span class="tag-item tag-orange">JSON</span>
+              <span class="tag-item tag-green">Fetch API</span>
+            </div>
+            <a
+              href="PortMenu.html"
+              class="project-link"
+            >
+              Ver Proyecto
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="additional-projects-section">
+        <h2 class="additional-projects-title">Otros Trabajos de la Cursada</h2>
+        <div class="additional-projects-grid">
+          <a href="index.html" class="additional-project-item">
+            <h4 class="additional-project-title">🔗 LinkTree</h4>
+            <p class="additional-project-description">Página de enlaces personales</p>
+          </a>
+          <a href="LEE_DiseñoyDesarrolloWeb.html" class="additional-project-item">
+            <h4 class="additional-project-title">🎭 Identikit</h4>
+            <p class="additional-project-description">Proyecto de identidad visual</p>
+          </a>
+          <a href="Blog.html" class="additional-project-item">
+            <h4 class="additional-project-title">📝 Blog</h4>
+            <p class="additional-project-description">Blog personal con artículos</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>
+      <a href="https://github.com/maxilee16" target="_blank" rel="noreferrer">GitHub</a>
+      <a href="https://www.linkedin.com/in/maximiliano-lee-b12687174/" target="_blank" rel="noreferrer">LinkedIn</a>
+      <a href="https://www.instagram.com/maxilee_/?hl=es-la" target="_blank" rel="noreferrer">Instagram</a>
+    </div>
+    <p>© 2025 Maximiliano Lee - Trabajo Práctico Nro. 3 - Diseño y Desarrollo Web</p>
+  </footer>
+
+</body>
+</html>
